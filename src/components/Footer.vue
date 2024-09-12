@@ -1,7 +1,6 @@
 <template>
-    <div class="header-logo">
-        <img src="/Union.png" alt="union">
-        <img src="/Swwipe.png" alt="swipee">
+    <div class="footer-img">
+        <img src="/Group 1000000817 (2).png" alt="">
     </div>
 </template>
 
