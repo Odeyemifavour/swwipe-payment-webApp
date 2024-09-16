@@ -1,7 +1,7 @@
 <template>
  <main>
   <div class="password-requirements">
-    
+    <PasswordRequirement v-if="showRequrements" :password="password" :requirements="requirements" />
   </div>
   <div class="create-account-container">
     
@@ -19,21 +19,21 @@
       <label for="business-name">
         <p>Business name</p>
         <section>
-          <input type="text" placeholder="Enter business name">
+          <input type="text" placeholder="Enter business name" v-model="businessName">
         </section>
       </label>
-
+    
       <label for="email-address">
         <p>Email address</p>
         <section>
-          <input type="text" placeholder="Enter email address">
+          <input type="text" placeholder="Enter email address" v-model="emailAddress" >
         </section>
       </label>
 
       <label for="password">
         <p>Password</p>
         <section class="password-section">
-          <input type="text" placeholder="Create password">
+          <input type="password" placeholder="Create password" v-model="password" @focus="showRequrements = true"  >
           <i class="material-icons">visibility_off</i>
         </section>
       </label>
@@ -41,12 +41,12 @@
       <label for="password">
         <p>Confirm password</p>
         <section class="password-section">
-          <input type="text" placeholder="Re-enter password">
+          <input type="password" placeholder="Re-enter password" v-model="confirmPassword">
           <i class="material-icons">visibility_off</i>
         </section>
       </label>
     </section>
-
+    
     <section class="terms-and-conditions">
       <p>By Creating an account, you agree to Swwipe's <span>Terms & Conditions</span> and <span>Privacy Policy</span></p>
     </section>
@@ -58,9 +58,12 @@
     <section class="login-here">
       <p>Already have a Swwipe account?</p>
       <p>
+       <RouterLink :to="{name: 'login'}">
         <span>Login</span>
         <span><img src="/Vector (6).png" alt=""></span>
+       </RouterLink>
       </p>
+      <RouterView/>
     </section>
   </div>
 
@@ -68,12 +71,64 @@
 </template>
 
 <script>
+import PasswordRequirement from '@/components/PasswordRequirement.vue';
+import { watch } from 'vue';
+import { ref } from 'vue';
+
   export default {
+    name:"createAccount",
+    components:{
+      PasswordRequirement
+    },
+    setup(){
+      const businessName = ref('');
+      const emailAddress = ref('');
+      const password = ref('');
+      const confirmPassword = ref('');
+      const showRequrements = ref(false);
+      const requirements = ref({
+        passwordLengthRequired: {
+          description: 'At least 10 characters', check: (password) => password.length >=10, pass: false
+        },
+        oneUppercaseRequired: {
+          description: 'At least 1 uppercase', check: (password) => /[A-Z]/.test(password), pass: false
+        },
+        twoUppercaseRequired: {
+          description: 'At least 2 uppercase', check: (password) => /[A-Z].*[A-Z]/.test(password), pass: false
+        },
+        digitRequired: {
+          description: 'At least 1 digit', check: (password) => /\d/.test(password), pass: false
+        },
+        symbolRequired: {
+          description: 'At least 1 symbol', check: (password) => /[!@#$%^&*(),.?":{}|<>_-]/.test(password), pass: false
+        }
+      })
+// watch
+        watch(password, (newPassword) => {
+    Object.keys(requirements.value).forEach(key => {
+      requirements.value[key].pass = requirements.value[key].check(newPassword);
+    });
+  });
+      return{
+        businessName,
+        emailAddress,
+        password,
+        showRequrements,
+        requirements
+      }
+    }
     
   }
 </script>
 
 <style lang="scss" scoped>
+main
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0px
+}
 .create-account-container
 {
   width: 60%;
@@ -167,6 +222,7 @@
   flex-direction: row;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
   & p:first-child
   {
     color: #4B5563;
