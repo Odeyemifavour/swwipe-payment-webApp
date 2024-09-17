@@ -44,8 +44,10 @@
                         <div class="create-account">
                             <p class="create-account-qstn"> Don't have a Swwipe account?</p>
                             <section>
-                                <p>Create account</p>
-                                <img src="/Vector (6).png" alt="">
+                                <RouterLink :to="{name: 'createAccount'}">
+                                    <p>Create account <img src="/Vector (6).png" alt=""> </p>
+                                    
+                                </RouterLink>
                             </section>
                         </div>
                     </section>
@@ -66,6 +68,7 @@
 <script>
 import Footer from '@/components/Footer.vue';
 import PaymentTrustBadges from '@/components/PaymentTrustBadges.vue';
+import CreateAccount from './CreateAccount.vue';
 
     export default {
         name: 'login',
@@ -233,15 +236,13 @@ main
         font-weight: 600;
         font-size: 13px;
     }
-    & section
+    & section 
     {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 5px;
         cursor: pointer;
      
-
         & p 
         {
             font-size: 13px;

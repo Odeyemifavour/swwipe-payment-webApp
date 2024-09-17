@@ -60,6 +60,7 @@
         <input :type="passwordVisible ? 'text' : 'password'" placeholder="Re-enter password" v-model="confirmPassword">
         <i class="material-icons" @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
       </section>
+      <p v-if="passwordMismatch" class="error-message">Passwords do not match</p>
     </label>
 
     </section>
@@ -135,15 +136,19 @@ import { ref } from 'vue';
         }
       })
 // watch
-        watch(password, (newPassword) => {
-    Object.keys(requirements.value).forEach(key => {
-      requirements.value[key].pass = requirements.value[key].check(newPassword);
-    });
+      watch(password, (newPassword) => {
+        Object.keys(requirements.value).forEach(key => {
+        requirements.value[key].pass = requirements.value[key].check(newPassword);
+      });
   });
 
-  const togglePasswordVisibility = () => {
+   const togglePasswordVisibility = () => {
       passwordVisible.value = !passwordVisible.value;
     };
+
+    // const passwordMismatch = computed(() => {
+    //   return password.value !== confirmPassword.value && confirmPassword.value !== '';
+    // }); 
 
       return{
         businessName,
@@ -152,7 +157,8 @@ import { ref } from 'vue';
         showRequrements,
         requirements,
         passwordVisible,
-        togglePasswordVisibility
+        togglePasswordVisibility,
+        
       }
     }
     
