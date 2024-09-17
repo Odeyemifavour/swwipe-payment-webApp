@@ -31,11 +31,11 @@
         </section>
       </label>
 
-      <label for="password">
+      <!-- <label for="password">
         <p>Password</p>
         <section class="password-section">
           <input type="password" placeholder="Create password" v-model="password" @focus="showRequrements = true"  >
-          <i class="material-icons">visibility_off</i>
+          <i class="material-icons" >visibility_off</i>
         </section>
       </label>
 
@@ -45,7 +45,23 @@
           <input type="password" placeholder="Re-enter password" v-model="confirmPassword">
           <i class="material-icons">visibility_off</i>
         </section>
-      </label>
+      </label> -->
+      <label for="password">
+      <p>Password</p>
+      <section class="password-section">
+        <input :type="passwordVisible ? 'text' : 'password'" placeholder="Create password" v-model="password" @focus="showRequrements = true">
+        <i class="material-icons" @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
+      </section>
+    </label>
+
+    <label for="confirm-password">
+      <p>Confirm password</p>
+      <section class="password-section">
+        <input :type="passwordVisible ? 'text' : 'password'" placeholder="Re-enter password" v-model="confirmPassword">
+        <i class="material-icons" @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
+      </section>
+    </label>
+
     </section>
     
     <section class="terms-and-conditions">
@@ -60,7 +76,7 @@
       <p>Already have a Swwipe account?</p>
       <p>
        <RouterLink :to="{name: 'login'}">
-        <span>Login</span>
+        <span class="login">Login</span>
         <span><img src="/Vector (6).png" alt=""></span>
        </RouterLink>
       </p>
@@ -100,6 +116,7 @@ import { ref } from 'vue';
       const password = ref('');
       const confirmPassword = ref('');
       const showRequrements = ref(false);
+      const passwordVisible = ref(false);
       const requirements = ref({
         passwordLengthRequired: {
           description: 'At least 10 characters', check: (password) => password.length >=10, pass: false
@@ -123,12 +140,19 @@ import { ref } from 'vue';
       requirements.value[key].pass = requirements.value[key].check(newPassword);
     });
   });
+
+  const togglePasswordVisibility = () => {
+      passwordVisible.value = !passwordVisible.value;
+    };
+
       return{
         businessName,
         emailAddress,
         password,
         showRequrements,
-        requirements
+        requirements,
+        passwordVisible,
+        togglePasswordVisibility
       }
     }
     
@@ -221,6 +245,10 @@ main
         font-weight: 400
       }
     }
+    & i 
+    {
+      cursor: pointer;
+    }
   }
 
 }
@@ -259,14 +287,20 @@ main
     font-weight: 500;
   }
   & p:nth-child(2){
-    color: #00B6AB;
+   
     font-size: 14px;
     font-weight: 500;
     display: flex;
     gap: 3px;
     flex-direction: row;
     align-items: center;
+    
   }
+}
+.login-here .login
+{
+  color: #00B6AB;
+  text-decoration: none;
 }
 .payment-trustBadges
 {
