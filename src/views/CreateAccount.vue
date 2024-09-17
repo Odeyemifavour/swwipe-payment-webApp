@@ -1,5 +1,6 @@
 <template>
  <main>
+ <div class="leftCol">
   <div class="password-requirements">
     <PasswordRequirement v-if="showRequrements" :password="password" :requirements="requirements" />
   </div>
@@ -66,19 +67,32 @@
       <RouterView/>
     </section>
   </div>
+ </div>
+ <div class="rightCol">
+  <div class="payment-trustBadges">
+            <PaymentTrustBadges/>
+        </div>
+ </div>
 
  </main>
+ <div class="footer">
+        <Footer/>
+    </div>
 </template>
 
 <script>
+import Footer from '@/components/Footer.vue';
 import PasswordRequirement from '@/components/PasswordRequirement.vue';
+import PaymentTrustBadges from '@/components/PaymentTrustBadges.vue';
 import { watch } from 'vue';
 import { ref } from 'vue';
 
   export default {
-    name:"createAccount",
+    name:'createAccount',
     components:{
-      PasswordRequirement
+      PasswordRequirement,
+      PaymentTrustBadges,
+      Footer
     },
     setup(){
       const businessName = ref('');
@@ -124,10 +138,25 @@ import { ref } from 'vue';
 <style lang="scss" scoped>
 main
 {
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0px
+}
+.leftCol, .rightCol
+{
+  width: 50%;
+}
+.leftCol 
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.rightCol
+{
+  background: #FFF6F5;
 }
 .create-account-container
 {
@@ -238,5 +267,13 @@ main
     flex-direction: row;
     align-items: center;
   }
+}
+.payment-trustBadges
+{
+   
+   
+}
+.footer{
+    margin-top: 0.2em;
 }
 </style>
