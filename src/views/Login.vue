@@ -32,7 +32,7 @@
                             </label>
                         </div>
                         <div class="forgot-password-qstn">
-                            <p>forgot password?</p>
+                           <p @click="toggleForgotPassword">forgot password?</p>
                         </div>
                         <div class="stay-signed-in">
                             <input type="checkbox" name="" id="">
@@ -59,6 +59,35 @@
                </div>
             </div>
         </main>
+
+        <ForgotPassword v-if="showForgottenPasswordContainer" @close="toggleForgotPassword">
+             <div class="close-pop">
+                <i class="fa-duotone fa-solid fa-xmark" @click="toggleForgotPassword"></i>
+             </div>
+            <div class="header">
+                <h3> forgot password </h3>
+                <p> Don't worry, it happens. Please provide the email address associated with your account</p>
+            </div>
+            <div class="image">
+                <img src="/Password_Two Color (1) 1.png" alt="">
+            </div>
+            <div class="enter-email">
+                <label for="email-address">
+                    <p>Email address</p>
+                    <section>
+                    <input type="text" placeholder="sammymetaverse@gmail.com" >
+                    </section>
+                </label>
+            </div>
+            <div class="submit">
+                <button>Submit</button>
+            </div>
+            <div class="reset-link">
+                <p>Can't find the link in your inbox? check your spam folder or 
+                    <span>Resend link</span>
+                </p>
+            </div>
+        </ForgotPassword>
         <div class="footer">
             <Footer/>
         </div>
@@ -69,13 +98,30 @@
 import Footer from '@/components/Footer.vue';
 import PaymentTrustBadges from '@/components/PaymentTrustBadges.vue';
 import CreateAccount from './CreateAccount.vue';
+import ForgotPassword from '@/components/ForgotPassword.vue';
+import { ref } from 'vue';
 
     export default {
         name: 'login',
         components:{
             Footer,
-            PaymentTrustBadges
-        }
+            PaymentTrustBadges,
+            ForgotPassword
+        },
+        
+        setup() {
+            const showForgottenPasswordContainer = ref(false);
+
+            const toggleForgotPassword = () => {
+                showForgottenPasswordContainer.value = !showForgottenPasswordContainer.value;
+            };
+
+            return {
+                showForgottenPasswordContainer,
+                toggleForgotPassword
+            };
+       }
+        
     }
 </script>
 
@@ -86,6 +132,7 @@ import CreateAccount from './CreateAccount.vue';
     margin: auto;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 main
 {
@@ -248,6 +295,121 @@ main
             font-size: 13px;
             color: #00B6AB;
             font-weight: 600;
+        }
+    }
+}
+.close-pop
+{
+    float: right;
+
+    & i 
+    {
+        color: #5C5F62;
+    }
+}
+.header 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column;
+    text-align:center;
+    margin: 1em 0;
+    h3
+    {
+        color: #1F2937;
+        font-weight: 700;
+        font-size: 20px;
+        
+    }
+    p
+    {
+        color: #4B5563;
+        font-weight: 500;
+        font-size: 16px;
+    }
+}
+.image 
+{
+    display: flex;
+    justify-content: center;
+    
+    img 
+    {
+        width: 200px;
+    }
+
+}
+.enter-email
+{
+    width: 100%;
+    & label
+    {
+        
+        p 
+        {
+            color: #141519;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 2px;
+        }
+         section 
+        {
+            border: 2px solid #9EA2B3;
+            padding: 0.5em 0.1em;
+            
+            border-radius: 5px;
+            & input
+            {
+            background: transparent;
+            border: none;
+            outline: none;
+        
+            &::placeholder
+            {
+                font-size: 12px;
+                font-weight: 400
+            }
+            }
+        }
+}
+}
+.submit
+{
+    width: 100%;
+    margin: 0.6em 0;
+
+    & button 
+    {
+        width:100%;
+        height: 35px;
+        border: none;
+        outline: none;
+        background: #00B6AB;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size:16px ;
+        color: #fff;
+        cursor: pointer;
+    }
+}
+.reset-link
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0.6em 0;
+    & p 
+    {
+        color: #4B5563;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+
+        & span 
+        {
+           color: #00B6AB;
         }
     }
 }

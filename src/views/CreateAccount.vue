@@ -112,6 +112,7 @@ import { ref } from 'vue';
       Footer
     },
     setup(){
+      
       const businessName = ref('');
       const emailAddress = ref('');
       const password = ref('');
