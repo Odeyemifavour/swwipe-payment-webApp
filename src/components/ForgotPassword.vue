@@ -31,13 +31,9 @@
     
     & .forgot-password-container
     {
-       display: flex;
-       flex-direction: column;
-
           width: 80%;
-          padding:20px;
           line-height: 16px;
-
+          padding-top: 0.8em;
     }
 }
 </style>

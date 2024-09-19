@@ -59,20 +59,21 @@
                </div>
             </div>
         </main>
-
-        <ForgotPassword v-if="showForgottenPasswordContainer" @close="toggleForgotPassword">
+        <ResetLink v-if="sendPasswordResetLink" @close="togglePasswordResetLinkSent">
             <div class="reset-link-sent">
                 <div class="sent-icon">
-
+                    <i class="fa-solid fa-circle-check"></i>
                 </div>
                 <div class="sent-text">
-
+                    <p>Password reset link sent</p>
                 </div>
                 <div class="close">
-                    <i class="fa-duotone fa-solid fa-xmark" > </i>
+                    <i class="fa-duotone fa-solid fa-xmark" @click="togglePasswordResetLinkSent" > </i>
                 </div>   
             </div>
-            <div class="forgot-password-field">
+        </ResetLink>
+
+        <ForgotPassword v-if="showForgottenPasswordContainer" @close="toggleForgotPassword">
                 <div class="close-pop">
                 <i class="fa-duotone fa-solid fa-xmark" @click="toggleForgotPassword" > </i>
              </div>
@@ -92,13 +93,12 @@
                 </label>
             </div>
             <div class="submit">
-                <button>Submit</button>
+                <button @click="togglePasswordResetLinkSent">Submit</button>
             </div>
             <div class="reset-link">
                 <p>Can't find the link in your inbox? check your spam folder or 
-                    <span>Resend link</span>
+                    <span @click="togglePasswordResetLinkSent">Resend link</span>
                 </p>
-            </div>
             </div>
         </ForgotPassword>
         <div class="footer">
@@ -113,25 +113,33 @@ import PaymentTrustBadges from '@/components/PaymentTrustBadges.vue';
 import CreateAccount from './CreateAccount.vue';
 import ForgotPassword from '@/components/ForgotPassword.vue';
 import { ref } from 'vue';
+import ResetLink from '@/components/ResetLink.vue';
 
     export default {
         name: 'login',
         components:{
             Footer,
             PaymentTrustBadges,
-            ForgotPassword
+            ForgotPassword,
+            ResetLink
         },
         
         setup() {
             const showForgottenPasswordContainer = ref(false);
+            const sendPasswordResetLink = ref(false);
 
             const toggleForgotPassword = () => {
                 showForgottenPasswordContainer.value = !showForgottenPasswordContainer.value;
             };
+            const togglePasswordResetLinkSent = () => {
+                sendPasswordResetLink.value = !sendPasswordResetLink.value;
+            }
 
             return {
                 showForgottenPasswordContainer,
-                toggleForgotPassword
+                toggleForgotPassword,
+                sendPasswordResetLink,
+                togglePasswordResetLinkSent
             };
        }
         
@@ -431,5 +439,41 @@ main
  {
   filter: blur(5px);
   transition: filter 0.3s ease-in-out;
+}
+.reset-link-sent 
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background-color: #95C9B4;
+    padding: 0.08em 0.8em;
+    border-radius: 5px;
+
+    div i 
+    {
+        color: #5C5F62;
+    }
+    & .sent-icon
+    {
+
+    }
+    & .sent-text
+    {
+        p 
+        {
+            color: #202223;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+    & .close 
+    {
+        i 
+        {
+            cursor: pointer;
+        }
+    }
+
 }
 </style>
