@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :class="{ 'blur-background': showForgottenPasswordContainer }">
         <main>
             <div class="main-content">
                 <div class="leftCol">
@@ -61,8 +61,20 @@
         </main>
 
         <ForgotPassword v-if="showForgottenPasswordContainer" @close="toggleForgotPassword">
-             <div class="close-pop">
-                <i class="fa-duotone fa-solid fa-xmark" @click="toggleForgotPassword"></i>
+            <div class="reset-link-sent">
+                <div class="sent-icon">
+
+                </div>
+                <div class="sent-text">
+
+                </div>
+                <div class="close">
+                    <i class="fa-duotone fa-solid fa-xmark" > </i>
+                </div>   
+            </div>
+            <div class="forgot-password-field">
+                <div class="close-pop">
+                <i class="fa-duotone fa-solid fa-xmark" @click="toggleForgotPassword" > </i>
              </div>
             <div class="header">
                 <h3> forgot password </h3>
@@ -86,6 +98,7 @@
                 <p>Can't find the link in your inbox? check your spam folder or 
                     <span>Resend link</span>
                 </p>
+            </div>
             </div>
         </ForgotPassword>
         <div class="footer">
@@ -305,6 +318,7 @@ main
     & i 
     {
         color: #5C5F62;
+        cursor: pointer;
     }
 }
 .header 
@@ -412,5 +426,10 @@ main
            color: #00B6AB;
         }
     }
+}
+.blur-background .main-content
+ {
+  filter: blur(5px);
+  transition: filter 0.3s ease-in-out;
 }
 </style>
