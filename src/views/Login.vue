@@ -88,13 +88,15 @@
                 <label for="email-address">
                     <p>Email address</p>
                     <section>
-                    <input type="text" placeholder="sammymetaverse@gmail.com" >
+                    <input type="text" placeholder="yourMail@gmail.com" >
                     </section>
                 </label>
             </div>
-            <div class="submit">
-                <button @click="togglePasswordResetLinkSent">Submit</button>
-            </div>
+           <RouterLink :to="{name: 'create-new-password'}">
+                <div class="submit">
+                    <button @click.prevent="handleSubmitBtn">Submit</button>
+                </div>
+           </RouterLink>
             <div class="reset-link">
                 <p>Can't find the link in your inbox? check your spam folder or 
                     <span @click="togglePasswordResetLinkSent">Resend link</span>
@@ -114,6 +116,8 @@ import CreateAccount from './CreateAccount.vue';
 import ForgotPassword from '@/components/ForgotPassword.vue';
 import { ref } from 'vue';
 import ResetLink from '@/components/ResetLink.vue';
+import CreateNewPassword from '@/components/CreateNewPassword.vue';
+import { useRouter } from 'vue-router';
 
     export default {
         name: 'login',
@@ -121,25 +125,35 @@ import ResetLink from '@/components/ResetLink.vue';
             Footer,
             PaymentTrustBadges,
             ForgotPassword,
-            ResetLink
+            ResetLink,
+            CreateNewPassword
         },
         
         setup() {
+            const router = useRouter();
             const showForgottenPasswordContainer = ref(false);
             const sendPasswordResetLink = ref(false);
 
             const toggleForgotPassword = () => {
                 showForgottenPasswordContainer.value = !showForgottenPasswordContainer.value;
             };
+
             const togglePasswordResetLinkSent = () => {
                 sendPasswordResetLink.value = !sendPasswordResetLink.value;
-            }
+            };
 
+            const handleSubmitBtn = ()=>{
+                togglePasswordResetLinkSent();
+                setTimeout( ()=> {
+                    router.push({name:'create-new-password'});
+                }, 500)
+            };
             return {
                 showForgottenPasswordContainer,
                 toggleForgotPassword,
                 sendPasswordResetLink,
-                togglePasswordResetLinkSent
+                togglePasswordResetLinkSent,
+                handleSubmitBtn
             };
        }
         
@@ -386,6 +400,8 @@ main
             background: transparent;
             border: none;
             outline: none;
+            
+            width: 100%;
         
             &::placeholder
             {
@@ -437,8 +453,8 @@ main
 }
 .blur-background .main-content
  {
-  filter: blur(5px);
-  transition: filter 0.3s ease-in-out;
+  filter: blur(15px);
+  transition: filter 0.1s ease-in-out;
 }
 .reset-link-sent 
 {

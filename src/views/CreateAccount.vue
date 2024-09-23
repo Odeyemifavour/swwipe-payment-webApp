@@ -31,34 +31,19 @@
         </section>
       </label>
 
-      <!-- <label for="password">
-        <p>Password</p>
-        <section class="password-section">
-          <input type="password" placeholder="Create password" v-model="password" @focus="showRequrements = true"  >
-          <i class="material-icons" >visibility_off</i>
-        </section>
-      </label>
-
-      <label for="password">
-        <p>Confirm password</p>
-        <section class="password-section">
-          <input type="password" placeholder="Re-enter password" v-model="confirmPassword">
-          <i class="material-icons">visibility_off</i>
-        </section>
-      </label> -->
       <label for="password">
       <p>Password</p>
       <section class="password-section">
         <input :type="passwordVisible ? 'text' : 'password'" placeholder="Create password" v-model="password" @focus="showRequrements = true">
-        <i class="material-icons" @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
+        <i class="material-icons" @click="togglePasswordVisibility('password')">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
       </section>
     </label>
 
     <label for="confirm-password">
       <p>Confirm password</p>
       <section class="password-section">
-        <input :type="passwordVisible ? 'text' : 'password'" placeholder="Re-enter password" v-model="confirmPassword">
-        <i class="material-icons" @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
+       <input :type="confirmPasswordVisible ? 'text' : 'password'" placeholder="Re-enter password" v-model="confirmPassword">
+      <i class="material-icons" @click="togglePasswordVisibility('confirmPassword')">{{ confirmPasswordVisible ? 'visibility' : 'visibility_off' }}</i>
       </section>
       <p v-if="passwordMismatch" class="error-message">Passwords do not match</p>
     </label>
@@ -119,6 +104,7 @@ import { ref } from 'vue';
       const confirmPassword = ref('');
       const showRequrements = ref(false);
       const passwordVisible = ref(false);
+      const confirmPasswordVisible = ref(false);
       const requirements = ref({
         passwordLengthRequired: {
           description: 'At least 10 characters', check: (password) => password.length >=10, pass: false
@@ -136,6 +122,7 @@ import { ref } from 'vue';
           description: 'At least 1 symbol', check: (password) => /[!@#$%^&*(),.?":{}|<>_-]/.test(password), pass: false
         }
       })
+
 // watch
       watch(password, (newPassword) => {
         Object.keys(requirements.value).forEach(key => {
@@ -143,14 +130,14 @@ import { ref } from 'vue';
       });
   });
 
-   const togglePasswordVisibility = () => {
-      passwordVisible.value = !passwordVisible.value;
-    };
-
-    // const passwordMismatch = computed(() => {
-    //   return password.value !== confirmPassword.value && confirmPassword.value !== '';
-    // }); 
-
+      const togglePasswordVisibility = (field) => {
+      if (field === 'password') {
+        passwordVisible.value = !passwordVisible.value;
+      } else if (field === 'confirmPassword') {
+        confirmPasswordVisible.value = !confirmPasswordVisible.value;
+      }
+    }
+        
       return{
         businessName,
         emailAddress,
@@ -159,6 +146,8 @@ import { ref } from 'vue';
         requirements,
         passwordVisible,
         togglePasswordVisibility,
+        confirmPassword,
+        confirmPasswordVisible
         
       }
     }
