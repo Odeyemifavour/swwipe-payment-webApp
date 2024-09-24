@@ -20,14 +20,14 @@
                             <label for="email">
                                 <p>Email Address</p>
                                 <section>
-                                    <input type="email" placeholder="Enter email address" >
+                                    <input type="email" placeholder="Enter email address" v-model="email">
                                 </section>
                             </label>
                             <label for="password">
                                 <p>Password</p>
                                 <section class="password-section">
-                                    <input type="password" placeholder="Enter password">
-                                    <i class="material-icons">visibility_off</i>
+                                    <input :type="passwordVisible ? 'text' : 'password'" placeholder="Enter password" v-model="password">
+                                    <i class="material-icons" @click="showPassword()" > {{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
                                 </section>
                             </label>
                         </div>
@@ -133,6 +133,9 @@ import { useRouter } from 'vue-router';
             const router = useRouter();
             const showForgottenPasswordContainer = ref(false);
             const sendPasswordResetLink = ref(false);
+            const password = ref('');
+            const passwordVisible = ref('');
+            const email = ref('');
 
             const toggleForgotPassword = () => {
                 showForgottenPasswordContainer.value = !showForgottenPasswordContainer.value;
@@ -148,12 +151,21 @@ import { useRouter } from 'vue-router';
                     router.push({name:'create-new-password'});
                 }, 500)
             };
+
+            const showPassword = ()=> {
+                passwordVisible.value =! passwordVisible.value;
+            }
+
             return {
                 showForgottenPasswordContainer,
                 toggleForgotPassword,
                 sendPasswordResetLink,
                 togglePasswordResetLinkSent,
-                handleSubmitBtn
+                handleSubmitBtn,
+                password,
+                email,
+                passwordVisible,
+                showPassword
             };
        }
         
@@ -255,6 +267,12 @@ main
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
+        i 
+        {
+            cursor: pointer;
+            color: #9EA2B3;
+        }
     }
 }
 .forgot-password-qstn

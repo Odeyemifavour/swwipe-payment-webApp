@@ -32,16 +32,16 @@
                 <label for="password">
                     <p>New Password</p>
                     <section class="password-section">
-                        <input placeholder="Enter new password" type="password" v-model="newPassword">
-                        <i class="material-icons" @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
+                        <input placeholder="Enter new password" :type="newPasswordVisibility ? 'text' : 'password'" v-model="newPassword">
+                        <i class="material-icons" @click="passwordVisibility('newPassword')">{{ newPasswordVisibility ? 'visibility' : 'visibility_off' }}</i>
                     </section>
                     </label>
 
                     <label for="confirm-password">
                     <p>Confirm password</p>
                     <section class="password-section">
-                        <input type="password" placeholder="Re-enter new password" v-model="confirmNewPassword">
-                        <i class="material-icons" @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
+                        <input :type="confirmNewPasswordVisibility ? 'text' : 'password'" placeholder="Re-enter new password" v-model="confirmNewPassword">
+                        <i class="material-icons" @click="passwordVisibility('confirmNewPassword')">{{ confirmNewPasswordVisibility ? 'visibility' : 'visibility_off' }}</i>
                     </section>
                     <p v-if="passwordMismatch" class="error-message">Passwords do not match</p>
                 </label>
@@ -80,6 +80,10 @@ import Footer from './Footer.vue';
         const newPassword = ref('');
         const confirmNewPassword = ref('');
         const verifyPasswordSent = ref(false);
+        const newPasswordVisibility = ref(false);
+        const confirmNewPasswordVisibility = ref(false);
+
+
         const togglePasswordSent = ()=> {
             verifyPasswordSent.value =! verifyPasswordSent.value;
               if(verifyPasswordSent.value = true){
@@ -93,12 +97,27 @@ import Footer from './Footer.vue';
             }
         }
 
+        const passwordVisibility = (field)=>{
+            if(field==='newPassword'){
+                newPasswordVisibility.value =! newPasswordVisibility.value;
+            }else if(field==='confirmNewPassword'){
+                confirmNewPasswordVisibility.value =! confirmNewPasswordVisibility;
+            }
+
+        }
+        
+    
+
         return{
             newPassword,
             confirmNewPassword,
             verifyPasswordSent,
             togglePasswordSent,
-            closePasswordSent
+            closePasswordSent,
+            passwordVisibility,
+            newPasswordVisibility,
+            confirmNewPasswordVisibility,
+        
         }
       }
       
@@ -231,6 +250,11 @@ import Footer from './Footer.vue';
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+
+            i 
+            {
+                color:#9EA2B3 ;
+            }
         }
         & label section 
         {

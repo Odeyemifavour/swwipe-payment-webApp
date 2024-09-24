@@ -1,7 +1,8 @@
 <template>
- <main>
+ <main @click="hideRequirements">
+
  <div class="leftCol">
-  <div class="password-requirements">
+  <div class="password-requirements" @click.stop>
     <PasswordRequirement v-if="showRequrements" :password="password" :requirements="requirements" />
   </div>
   <div class="create-account-container">
@@ -33,8 +34,8 @@
 
       <label for="password">
       <p>Password</p>
-      <section class="password-section">
-        <input :type="passwordVisible ? 'text' : 'password'" placeholder="Create password" v-model="password" @focus="showRequrements = true">
+      <section class="password-section ">
+        <input :type="passwordVisible ? 'text' : 'password'" placeholder="Create password" v-model="password" @focus="showRequrements = true" @click.stop>
         <i class="material-icons" @click="togglePasswordVisibility('password')">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
       </section>
     </label>
@@ -42,7 +43,7 @@
     <label for="confirm-password">
       <p>Confirm password</p>
       <section class="password-section">
-       <input :type="confirmPasswordVisible ? 'text' : 'password'" placeholder="Re-enter password" v-model="confirmPassword">
+        <input :type="confirmPasswordVisible ? 'text' : 'password'" placeholder="Re-enter password" v-model="confirmPassword"  @click.stop>
       <i class="material-icons" @click="togglePasswordVisibility('confirmPassword')">{{ confirmPasswordVisible ? 'visibility' : 'visibility_off' }}</i>
       </section>
       <p v-if="passwordMismatch" class="error-message">Passwords do not match</p>
@@ -62,7 +63,7 @@
       <p>Already have a Swwipe account?</p>
       <p>
        <RouterLink :to="{name: 'login'}">
-        <span class="login">Login</span>
+        <span class="login" >Login</span>
         <span><img src="/Vector (6).png" alt=""></span>
        </RouterLink>
       </p>
@@ -87,8 +88,7 @@ import Footer from '@/components/Footer.vue';
 import PasswordRequirement from '@/components/PasswordRequirement.vue';
 import PaymentTrustBadges from '@/components/PaymentTrustBadges.vue';
 import { watch } from 'vue';
-import { ref } from 'vue';
-
+import { ref,  onMounted, onUnmounted} from 'vue';
   export default {
     name:'createAccount',
     components:{
@@ -105,6 +105,7 @@ import { ref } from 'vue';
       const showRequrements = ref(false);
       const passwordVisible = ref(false);
       const confirmPasswordVisible = ref(false);
+      const passwordMismatch = ref(false);
       const requirements = ref({
         passwordLengthRequired: {
           description: 'At least 10 characters', check: (password) => password.length >=10, pass: false
@@ -137,6 +138,37 @@ import { ref } from 'vue';
         confirmPasswordVisible.value = !confirmPasswordVisible.value;
       }
     }
+
+    const hideRequirements = (event) => {
+      const clickedOutsidePassword = !event.target.closest('.password-section');
+      const clickedOutsideRequirements = !event.target.closest('.password-requirements');
+
+      if (clickedOutsidePassword && clickedOutsideRequirements) {
+        showRequrements.value = false;
+      }
+    };
+
+
+    onMounted(() => {
+      document.addEventListener('click', hideRequirements);
+    });
+
+    onUnmounted(() => {
+      document.removeEventListener('click', hideRequirements);
+    });
+
+    const checkPasswordMatch = () => {
+      passwordMismatch.value = password.value !== confirmPassword.value;
+    };
+    watch(confirmPassword, () => {
+      checkPasswordMatch();
+    });
+
+    watch(password, (newPassword) => {
+    if (confirmPassword.value) {
+      checkPasswordMatch();
+    }
+  });
         
       return{
         businessName,
@@ -147,8 +179,10 @@ import { ref } from 'vue';
         passwordVisible,
         togglePasswordVisibility,
         confirmPassword,
-        confirmPasswordVisible
-        
+        confirmPasswordVisible,
+        hideRequirements,
+        checkPasswordMatch,
+        passwordMismatch
       }
     }
     
@@ -210,6 +244,12 @@ main
   & label
   {
     margin: 0.5em 0;
+
+      .error-message {
+      color: red;
+      font-size: 11px;
+      margin-top: 10px;
+    }
   }
   & label p
   {
@@ -244,6 +284,7 @@ main
     & i 
     {
       cursor: pointer;
+      color: #9EA2B3
     }
   }
 
@@ -293,6 +334,10 @@ main
     
   }
 }
+a 
+{
+  text-decoration: none;
+}
 .login-here .login
 {
   color: #00B6AB;
@@ -306,4 +351,5 @@ main
 .footer{
     margin-top: 0.2em;
 }
+
 </style>
