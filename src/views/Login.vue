@@ -7,7 +7,7 @@
                         <img  src="/Union.png" alt="">
                         <img src="/Swwipe.png" alt="">
                     </div>     
-                    <section class="back">
+                    <section @click="goBack" class="back">
                         <img src="/Vector (7).png" alt="">
                         <p>Back</p>
                     </section>
@@ -156,6 +156,9 @@ import { useRouter } from 'vue-router';
                 passwordVisible.value =! passwordVisible.value;
             }
 
+            const goBack= () => {
+                router.go(-1)
+            }
             return {
                 showForgottenPasswordContainer,
                 toggleForgotPassword,
@@ -165,7 +168,8 @@ import { useRouter } from 'vue-router';
                 password,
                 email,
                 passwordVisible,
-                showPassword
+                showPassword,
+                goBack
             };
        }
         
@@ -224,7 +228,7 @@ main
     gap: 8px;
     color: #1F2937;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 15px;
     cursor: pointer;
     margin-bottom: 2em;
 }
@@ -484,9 +488,13 @@ main
     padding: 0.08em 0.8em;
     border-radius: 5px;
 
-    div i 
+    div .fa-xmark
     {
         color: #5C5F62;
+    }
+    div .fa-circle-check
+    {
+        color: green;
     }
     & .sent-icon
     {
@@ -509,5 +517,9 @@ main
         }
     }
 
+}
+a 
+{
+    text-decoration: none
 }
 </style>
