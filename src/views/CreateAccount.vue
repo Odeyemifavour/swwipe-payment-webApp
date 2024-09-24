@@ -1,8 +1,8 @@
 <template>
- <main @click="hideRequirements">
+ <main>
 
  <div class="leftCol">
-  <div class="password-requirements" @click.stop>
+  <div class="password-requirements" >
     <PasswordRequirement v-if="showRequrements" :password="password" :requirements="requirements" />
   </div>
   <div class="create-account-container">
@@ -35,7 +35,7 @@
       <label for="password">
       <p>Password</p>
       <section class="password-section ">
-        <input :type="passwordVisible ? 'text' : 'password'" placeholder="Create password" v-model="password" @focus="showRequrements = true" @click.stop>
+        <input :type="passwordVisible ? 'text' : 'password'" placeholder="Create password" v-model="password" @focus="showRequrements = true">
         <i class="material-icons" @click="togglePasswordVisibility('password')">{{ passwordVisible ? 'visibility' : 'visibility_off' }}</i>
       </section>
     </label>
@@ -43,7 +43,7 @@
     <label for="confirm-password">
       <p>Confirm password</p>
       <section class="password-section">
-        <input :type="confirmPasswordVisible ? 'text' : 'password'" placeholder="Re-enter password" v-model="confirmPassword"  @click.stop>
+        <input :type="confirmPasswordVisible ? 'text' : 'password'" placeholder="Re-enter password" v-model="confirmPassword">
       <i class="material-icons" @click="togglePasswordVisibility('confirmPassword')">{{ confirmPasswordVisible ? 'visibility' : 'visibility_off' }}</i>
       </section>
       <p v-if="passwordMismatch" class="error-message">Passwords do not match</p>
@@ -139,13 +139,8 @@ import { ref,  onMounted, onUnmounted} from 'vue';
       }
     }
 
-    const hideRequirements = (event) => {
-      const clickedOutsidePassword = !event.target.closest('.password-section');
-      const clickedOutsideRequirements = !event.target.closest('.password-requirements');
-
-      if (clickedOutsidePassword && clickedOutsideRequirements) {
-        showRequrements.value = false;
-      }
+    const hideRequirements = () => {
+      showRequrements.value = false;
     };
 
 

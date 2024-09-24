@@ -314,5 +314,9 @@ import Footer from './Footer.vue';
             cursor: pointer;
         }
     }
+    a 
+    {
+        text-decoration: none;
+    }
     
 </style>
