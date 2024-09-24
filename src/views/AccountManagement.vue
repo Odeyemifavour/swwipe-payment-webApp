@@ -4,18 +4,20 @@
             <SideBar/>
         </aside>
         <div class="main-content">
-            main content
+            <Dashboard/>
         </div>
     </main>
 </template>
 
 <script>
+import Dashboard from '@/components/Dashboard.vue';
 import SideBar from '@/components/SideBar.vue';
 
     export default {
         name:'accountManagement',
         components: {
-            SideBar
+            SideBar,
+            Dashboard
         }
         
     }
@@ -28,7 +30,6 @@ main
     grid-template-columns: 16rem auto;
     width: 96%;
     margin: auto;
-    gap: 1.8em;
     background-color: #fff;
 }
 .right
@@ -37,6 +38,11 @@ main
 }
 .main-content
 {
-    border:2px solid red
+    background: whitesmoke;
+    height: 100vh;
+}
+a 
+{
+    text-decoration: none;
 }
 </style>

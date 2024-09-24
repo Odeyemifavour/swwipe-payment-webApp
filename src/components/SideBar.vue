@@ -38,7 +38,7 @@
 
            <section>
             <ul>
-                <li> <h5>transactions</h5> </li>
+                <h5>transactions</h5> 
                 <li>
                     <i class="material-icons"> payment</i>
                     <span>Payment</span>
@@ -53,7 +53,7 @@
 
            <section>
             <ul>
-                <li> <h5>reports</h5></li>
+                 <h5>reports</h5>
                 <li>
                     <i class="material-icons"> receipt</i>
                     <span>wallet statement</span>
@@ -77,7 +77,7 @@
 
            <section>
             <ul>
-                <li> <h5>others</h5> </li>
+                 <h5>others</h5>
                 <li>
                     <i class="material-icons"> flag</i>
                     <span>disputes</span>
@@ -118,6 +118,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        margin-top: 3em ;
 
         .profile {
             display: flex;
@@ -207,7 +208,11 @@ section ul li {
     flex-direction: row;
     align-items: center; 
     gap: 10px;
-    margin: 0.5em 0;
+    margin: 0.1em 0;
+    text-transform: capitalize;
+    padding: 0.5em ;
+    border-radius: 5px;
+    transition: all 0.5s;
     
     i {
         color: #6B7280;
@@ -219,6 +224,20 @@ section ul li {
         color: #1F2937;
         font-size: 14px;
     }
+}
+section ul li:hover
+{
+    background: #F1F3F9;
+    cursor: pointer;
+    i {
+        color: #009289;
+      
+    }
+
+    span {
+        color: #009289;
+        }
+
 }
 section ul .location 
 {

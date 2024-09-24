@@ -3,6 +3,7 @@ import Login from '@/views/Login.vue'
 import CreateAccount from '@/views/CreateAccount.vue'
 import CreateNewPassword from '@/components/CreateNewPassword.vue'
 import AccountManagement from '@/views/AccountManagement.vue'
+import Dashboard from '@/components/Dashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path:'/account-management',
       name:'accountManagement',
       component: AccountManagement
+    },
+    {
+      path:'/dashboard',
+      name:'dashboard',
+      component: Dashboard
     }
     
   ]
