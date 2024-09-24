@@ -39,7 +39,9 @@
                             <p>Stay signed into your Swwipe account</p>
                         </div>
                         <div class="login-btn">
+                           <RouterLink :to="{name: 'accountManagement'}">
                             <button>Login to your account</button>
+                           </RouterLink>
                         </div>
                         <div class="create-account">
                             <p class="create-account-qstn"> Don't have a Swwipe account?</p>
