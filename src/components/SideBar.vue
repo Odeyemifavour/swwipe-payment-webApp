@@ -128,8 +128,28 @@
     }    
 }
 
-.profile-pic img {
+.profile-pic {
+  position: relative;
+  width: 40px;
+  height: 40px;
+
+  img {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .active {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    top: 0;
+    right: 0;
+    border: 2px solid white;
+  }
 }
 
 .profile-text {
@@ -150,7 +170,7 @@
 .user-menu {
     display: flex;
     flex-direction: column;
-    margin: 1em 0;
+    margin: 0.7em 0;
     padding-left: 0;
    
     section ul {
