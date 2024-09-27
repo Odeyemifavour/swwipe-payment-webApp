@@ -1,0 +1,12 @@
+<svg width="459" height="84" viewBox="0 0 459 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Account Card">
+<rect id="Mask" width="459" height="84" rx="4" fill="#009289"/>
+<mask id="mask0_183_16429" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="459" height="84">
+<rect id="Mask_2" width="459" height="84" rx="4" fill="white"/>
+</mask>
+<g mask="url(#mask0_183_16429)">
+<ellipse id="Oval" opacity="0.4" cx="435.112" cy="12.11" rx="63.1125" ry="63.11" fill="#FDDAD8"/>
+<circle id="Oval Copy 2" opacity="0.4" cx="252.447" cy="-38.0902" r="63.11" fill="#FDDAD8"/>
+</g>
+</g>
+</svg>

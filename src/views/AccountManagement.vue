@@ -28,13 +28,15 @@ main
 {
     display: grid;
     grid-template-columns: 16rem auto;
-    width: 96%;
+    width: 100%;
     margin: auto;
     background-color: #fff;
 }
 .right
 {
    height: 100vh;
+   margin-left: 1em;
+   border-radius: 4px;
 }
 .main-content
 {
